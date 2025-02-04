@@ -77,7 +77,7 @@ export const light: Theme = {
     },
     normal: {
       color: 'black',
-      backgroundColor: 'lightgray',
+      backgroundColor: 'gray',
     },
   },
   borderRadius: {
