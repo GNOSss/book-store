@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { ThemeName, getTheme } from '../style/theme';
+import { ThemeName, getTheme } from '@/style/theme';
 import { ThemeProvider } from 'styled-components';
-import { GlobalStyle } from '../style/global';
+import { GlobalStyle } from '@/style/global';
 
 const DEFAULT_THEME_NAME = 'light';
 const THEME_LOCALSTORAGE_KEY = 'book_store_theme';

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import InputText from './inputText';
-import { BookStoreThemeProvider } from '../../context/themeContext';
+import { BookStoreThemeProvider } from '@/context/themeContext';
 
 describe('inputText 컴포넌트 테스트', () => {
   it('랜더를 확인', () => {

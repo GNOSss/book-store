@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
-import logo from '../../assets/logo.png';
+import logo from '@/assets/logo.png';
 import { FaSignInAlt } from '@react-icons/all-files/fa/FaSignInAlt';
 import { FaRegUser } from '@react-icons/all-files/fa/FaRegUser';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCategory } from '../../hooks/useCategory';
-import { useAuthStore } from '../../store/authStore';
-import { useAlert } from '../../hooks/useAlert';
+import { useCategory } from '@/hooks/useCategory';
+import { useAuthStore } from '@/store/authStore';
+import { useAlert } from '@/hooks/useAlert';
 
 const Header = () => {
   const { category } = useCategory();
@@ -13,7 +13,7 @@ const Header = () => {
   const { isloggedIn, storeLogout } = useAuthStore();
 
   const navigate = useNavigate();
-  const showAlert = useAlert();
+  const { showAlert } = useAlert();
 
   const handleLogout = () => {
     storeLogout();
@@ -41,7 +41,7 @@ const Header = () => {
         {isloggedIn && (
           <ul>
             <li>
-              <Link to="/cart">장바구니</Link>
+              <Link to="/carts">장바구니</Link>
             </li>
             <li>
               <Link to="/orderlist">주문 내역</Link>

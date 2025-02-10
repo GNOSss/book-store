@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Footer from '../common/Footer';
-import Header from '../common/Header';
+import Footer from '@/components/common/Footer';
+import Header from '@/components/common/Header';
 
 interface LayoutProps {
   children: React.ReactNode;

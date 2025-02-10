@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Category } from '../models/category.model';
-import { fetchCategory } from '../api/category.api';
+import { Category } from '@/models/category.model';
+import { fetchCategory } from '@/api/category.api';
 import { useLocation } from 'react-router-dom';
 
 export const useCategory = () => {
   const location = useLocation();
   const [category, setCategory] = useState<Category[]>([]);
+
+  console.log(category);
 
   const setActive = () => {
     const params = new URLSearchParams(location.search);

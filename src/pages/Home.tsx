@@ -1,6 +1,6 @@
-import Button from '../components/common/Button';
-import Title from '../components/common/Title';
-import InputText from '../components/common/inputText';
+import Button from '@/components/common/Button';
+import Title from '@/components/common/Title';
+import InputText from '@/components/common/inputText';
 
 const Home = () => {
   return (
