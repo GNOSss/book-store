@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import Title from '@/components/common/Title';
 import InputText from '@/components/common/inputText';
 import Button from '@/components/common/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { signup } from '@/api/auth.api';
-import { useAlert } from '@/hooks/useAlert';
+import { useAuth } from '@/hooks/useAuth';
 
 export interface SignupProps {
   email: string;
@@ -13,16 +12,7 @@ export interface SignupProps {
 }
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const { showAlert } = useAlert();
-
-  //   const [email, setEmail] = useState('');
-  //   const [password, setPassword] = useState('');
-
-  //   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault(); // HTML Form을 서밋하면 페이지 이동하게되는데 그걸 막아줌
-  //     console.log(email, password);
-  //   };
+  const { userSignup } = useAuth();
 
   const {
     register,
@@ -31,10 +21,7 @@ const Signup = () => {
   } = useForm<SignupProps>();
 
   const onSubmit = (data: SignupProps) => {
-    signup(data).then(() => {
-      showAlert('회원가입이 완료되었습니다.'); // 회원가입 성공시 , showAlert함수에 텍스트를 인자로 전달하여 실행
-      navigate('/login'); // 회원가입 성공시 , 로그인 화면으로 이동
-    });
+    userSignup(data);
   };
 
   return (

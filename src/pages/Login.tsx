@@ -1,12 +1,11 @@
 import Title from '@/components/common/Title';
 import InputText from '@/components/common/inputText';
 import Button from '@/components/common/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { login } from '@/api/auth.api';
-import { useAlert } from '@/hooks/useAlert';
 import { SignupStyle } from './Signup';
 import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/hooks/useAuth';
 
 export interface SignupProps {
   email: string;
@@ -14,14 +13,9 @@ export interface SignupProps {
 }
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { showAlert } = useAlert();
+  const { userLogin } = useAuth();
 
-  /**
-   * isloggedIn : 상태
-   * storeLogin,storeLogout : 액션
-   */
-  const { isloggedIn, storeLogin, storeLogout } = useAuthStore();
+  
 
   const {
     register,
@@ -30,16 +24,7 @@ const Login = () => {
   } = useForm<SignupProps>();
 
   const onSubmit = (data: SignupProps) => {
-    login(data).then(
-      (res) => {
-        storeLogin(res.token); // isloggedIn은 true 변환
-        showAlert('로그인 완료되었습니다.');
-        navigate('/');
-      },
-      (error) => {
-        showAlert('로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다.');
-      }
-    );
+    userLogin(data);
   };
 
   return (

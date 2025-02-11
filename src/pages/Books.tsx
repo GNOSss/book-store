@@ -6,9 +6,20 @@ import BooksEmpty from '@/components/books/BooksEmpty';
 import Pagination from '@/components/books/Pagination';
 import { useBooks } from '@/hooks/useBooks';
 import BooksViewSwitcher from '@/components/books/BooksViewSwitcher';
+import Loading from '@/components/common/Loading';
 
 const Books = () => {
-  const { books, pagination, isEmpty } = useBooks();
+  const { books, pagination, isEmpty, isBooksLoading } = useBooks();
+
+  // 아이템 없을때
+  if (isEmpty) {
+    return <BooksEmpty />;
+  }
+
+  // books, pagination의 값이 없고 Loading중일때
+  if (!books || !pagination || isBooksLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -18,9 +29,8 @@ const Books = () => {
           <BooksFilter />
           <BooksViewSwitcher />
         </div>
-        {!isEmpty && <BooksList books={books} />}
-        {isEmpty && <BooksEmpty />}
-        {!isEmpty && <Pagination pagination={pagination} />}
+        <BooksList books={books} />
+        <Pagination pagination={pagination} />
       </BooksStyle>
     </>
   );
