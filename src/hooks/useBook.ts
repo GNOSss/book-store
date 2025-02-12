@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { BookDetail } from '@/models/book.model';
+import { BookDetail, BookReviewItem, BookReviewItemWrite } from '@/models/book.model';
 import { fetchBook, likeBook, unlikeBook } from '@/api/books.api';
 import { useAuthStore } from '@/store/authStore';
 import { useAlert } from './useAlert';
 import { useNavigate } from 'react-router-dom';
 import { addCart } from '@/api/carts.api';
+import { addBookReview, fetchBookReview } from '@/api/review.api';
+import { UseFormReset } from 'react-hook-form';
+import { useToast } from './useToast';
 
 /**
  * bookId는 useParams()에 나온 데이터인데
@@ -12,12 +15,13 @@ import { addCart } from '@/api/carts.api';
  */
 export const useBook = (bookId: string | undefined) => {
   const [book, setBook] = useState<BookDetail | null>(null);
-
   const [cartAdded, setCardAdded] = useState(false);
+  const [reviews, setRivews] = useState<BookReviewItem[]>([]);
 
   const { isloggedIn } = useAuthStore();
   const { showAlert } = useAlert();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const likeToggle = () => {
     // 권한 확인
@@ -34,11 +38,13 @@ export const useBook = (bookId: string | undefined) => {
       // 라이크 상태 -> 언라이크 실행
       unlikeBook(book.id).then(() => {
         setBook({ ...book, liked: false, likes: book.likes - 1 });
+        showToast('좋아요가 취소되었습니다.');
       });
     } else {
       // 언라이크 상태 -> 라이크 실행
       likeBook(book.id).then(() => {
         setBook({ ...book, liked: true, likes: book.likes + 1 });
+        showToast('좋아요가 추가되었습니다.');
       });
     }
   };
@@ -66,7 +72,23 @@ export const useBook = (bookId: string | undefined) => {
         setBook(res);
       })
       .catch(() => {});
+
+    fetchBookReview(bookId).then((res) => {
+      setRivews(res);
+    });
   }, [bookId]);
 
-  return { book, likeToggle, addToCart, cartAdded };
+  const addReview = (data: BookReviewItemWrite, reset: UseFormReset<BookReviewItemWrite>) => {
+    if (!book) return;
+
+    addBookReview(book.id.toString(), data).then((res) => {
+      fetchBookReview(book.id.toString()).then((reviews) => {
+        setRivews(reviews);
+      });
+      showAlert(res.message);
+      reset();
+    });
+  };
+
+  return { book, likeToggle, addToCart, cartAdded, reviews, addReview };
 };

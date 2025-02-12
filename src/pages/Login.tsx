@@ -4,7 +4,6 @@ import Button from '@/components/common/Button';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { SignupStyle } from './Signup';
-import { useAuthStore } from '@/store/authStore';
 import { useAuth } from '@/hooks/useAuth';
 
 export interface SignupProps {
@@ -15,7 +14,10 @@ export interface SignupProps {
 const Login = () => {
   const { userLogin } = useAuth();
 
-  
+  /**
+   * isloggedIn : 상태
+   * storeLogin,storeLogout : 액션
+   */
 
   const {
     register,
