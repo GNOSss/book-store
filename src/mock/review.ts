@@ -31,3 +31,12 @@ export const addReview = http.post(`http://localhost:3000/reviews/:bookId`, () =
     }
   );
 });
+
+// 메인화면_리뷰섹션
+export const reviewForMain = http.get('http://localhost:3000/reviews', () => {
+  return HttpResponse.json(mockReviewdata, {
+    status: 200,
+  });
+});
+
+
